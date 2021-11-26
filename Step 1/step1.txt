@@ -1,0 +1,46 @@
+Assessment 7 Runtime and paragraph about it.
+
+extraLargeArray: insert 755.4802 ms
+                 append 3.0584 ms
+
+
+tinyArray: insert 32.1 us
+	   append 75.9 us
+
+
+smallArray: insert 40 .5 us 
+	    append 84.6 us
+
+
+
+mediumArray: insert 141.8 us
+	     append 124 us
+
+
+
+
+largeArray:  insert 7.7214 ms
+	     append 421.4 us
+
+
+
+extraLargeArray:  insert 763.3635 ms
+	          append 3.1949 ms
+
+
+
+	For what I see in the functions is that the function doublerInsert that is using the unshift method to effect the array requires more time on every test. The push method scales the best over all and the mediumArray to me is the most scaleable out of all the five. The mediumArray numbers was closer to each other as you can see from the test i ran. The mircoseconds are under 20 microns difference compared to all the other test. The tinyArray and smallArry are similar in the difference of there microseconds.
+
+EXTRA CREDIT:
+
+to understand this, there needs to be some knowledge about how a Stack (in JavaScript, an Array) is designed in computer science and is represented within your RAM/memory. If you create a Stack(an Array), essentially you are telling the system to allocate a space in memory for a stack that eventually can grow.
+
+Now, everytime you add to that Stack (with push), it adds to the end of that stack. Eventually the system sees that the Stack isn't going to be big enough, so it allocates a new space in memory at old stack.length * 2 and copies the old information to the new space. This behavior is also the reason why you always should initialize an Array/Stack with a predefined size (if you know it) with (const mediumArray = getSizedArray(1000);) so that the system doesn't need to "newly allocate memory and copy over".
+
+Considering unshift, it seems very similar to push. It just adds it to the start of the list, right? But as dismissive this difference seems, its very big! As explained with push, eventually there is a "allocate memory and copy over" when size runs out. With unshift, it wants to add something to the start. But there is already something there. So it would have to move the element at position [i] to position [i]+1, [i]1 to [i]1+1, [i]2 to [i]2+1 etc. Because that is very inefficient, it actually just newly allocates memory, adds the new Element and then copies over the oldstack to the newstack. This is the reason your graph has more an quadratic or even a slight exponential look to it.
+
+To conclude;
+
+push adds to the end and rarely needs reallocate memory+copy over.
+
+unshift adds to the start and always needs to reallocate memory and copy data over
